@@ -15,6 +15,10 @@ const choixRoute = require("./app/routes/choix.route")
 const keycloudRoute = require("./app/routes/keycloud.route")
 const libraryRoute = require("./app/routes/library.route")
 const categoryRoute = require("./app/routes/category.route")
+const userRoute = require("./app/routes/user.route")
+const candidature_offreRoute = require("./app/routes/candidature_offre.route")
+
+
 
 
 
@@ -52,6 +56,8 @@ app.use(choixRoute)
 app.use(keycloudRoute)
 app.use(libraryRoute)
 app.use(categoryRoute)
+app.use(userRoute)
+app.use(candidature_offreRoute)
 
 
 

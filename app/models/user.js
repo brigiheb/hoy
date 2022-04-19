@@ -30,8 +30,8 @@ module.exports = (sequelize, Sequelize)=>{
             unique: true  
         },
         companyName:{
-            type: DataTypes.INTEGER,
-            allowNull: true,
+            type: DataTypes.STRING,
+            allowNull: false,
         },
         
     })

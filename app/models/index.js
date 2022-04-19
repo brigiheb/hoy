@@ -49,6 +49,8 @@ db.categorys=require("./category")(sequelize,Sequelize)
 db.keyclouds=require("./keycloud")(sequelize,Sequelize)
 db.users=require("./user")(sequelize,Sequelize)
 db.roles=require("./role.model")(sequelize,Sequelize)
+db.candidature_offres=require("./candidature_offre")(sequelize,Sequelize)
+
 
 
 
@@ -58,19 +60,19 @@ db.roles=require("./role.model")(sequelize,Sequelize)
 
 //  //****Many to Many******** */
 
- //candidature & offres
-db.candidatures.belongsToMany(db.offres,{
-  through : 'candidature_offre',
-  as:'offre',
-  foreignKey:'candidatureId',
+//  //candidature & offres
+// db.candidatures.belongsToMany(db.offres,{
+//   through : 'candidature_offres',
+//   as:'offre',
+//   foreignKey:'candidatureId',
 
-})
-db.offres.belongsToMany(db.candidatures,{
-  through : 'candidature_offre',
-  as:'candidature',
-  foreignKey:'offreId',
+// })
+// db.offres.belongsToMany(db.candidatures,{
+//   through : 'candidature_offres',
+//   as:'candidature',
+//   foreignKey:'offreId',
 
-})
+// })
 
 //keycloud & offres
 db.keyclouds.belongsToMany(db.offres,{
@@ -231,6 +233,43 @@ db.categorys.hasMany(db.librarys,{
 db.librarys.belongsTo(db.categorys,{
   foreignKey : 'categoryId',
   as: 'category'
+
+})
+
+// candidature_offre & offre
+
+db.offres.hasMany(db.candidature_offres,{
+  foreignKey : 'offreId',
+  as: 'candidature_offre'
+})
+
+db.candidature_offres.belongsTo(db.offres,{
+  foreignKey : 'offreId',
+  as: 'offre'
+
+})
+
+// candidature_offre & candidature
+db.candidatures.hasMany(db.candidature_offres,{
+  foreignKey : 'candidatureId',
+  as: 'candidature_offre'
+})
+
+db.candidature_offres.belongsTo(db.candidatures,{
+  foreignKey : 'candidatureId',
+  as: 'candidature'
+
+})
+
+// candidature_offre & links
+db.links.hasMany(db.candidature_offres,{
+  foreignKey : 'linkId',
+  as: 'candidature_offre'
+})
+
+db.candidature_offres.belongsTo(db.links,{
+  foreignKey : 'candidatureId',
+  as: 'link'
 
 })
 
