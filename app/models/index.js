@@ -60,19 +60,19 @@ db.candidature_offres=require("./candidature_offre")(sequelize,Sequelize)
 
 //  //****Many to Many******** */
 
-//  //candidature & offres
-// db.candidatures.belongsToMany(db.offres,{
-//   through : 'candidature_offres',
-//   as:'offre',
-//   foreignKey:'candidatureId',
+//  //candidature & library
+db.candidatures.belongsToMany(db.librarys,{
+  through : 'candidature_library',
+  as:'library',
+  foreignKey:'candidatureId',
 
-// })
-// db.offres.belongsToMany(db.candidatures,{
-//   through : 'candidature_offres',
-//   as:'candidature',
-//   foreignKey:'offreId',
+})
+db.librarys.belongsToMany(db.candidatures,{
+  through : 'candidature_library',
+  as:'candidature',
+  foreignKey:'libraryId',
 
-// })
+})
 
 //keycloud & offres
 db.keyclouds.belongsToMany(db.offres,{
@@ -130,8 +130,34 @@ db.users.belongsToMany(db.roles,{
   foreignKey : "user_id"
 })
 
+//user  & librairy
 
+db.users.belongsToMany(db.librarys,{
+  through: "user_library",
+  foreignKey : 'userId',
+  as: 'library'
+})
 
+db.librarys.belongsToMany(db.users,{
+  through: "user_library",
+  foreignKey : 'libraryId',
+  as: 'user'
+
+})
+
+//user  & offre
+db.users.belongsToMany(db.offres,{
+  through: "user_offre",
+  foreignKey : 'userId',
+  as: 'offre'
+})
+
+db.offres.belongsToMany(db.users,{
+  through: "user_offre",
+  foreignKey : 'offreId',
+  as: 'user'
+
+})
 
 // //ONE to MANY
 // //offre & degree
@@ -272,6 +298,7 @@ db.candidature_offres.belongsTo(db.links,{
   as: 'link'
 
 })
+
 
 
 module.exports = db ;
