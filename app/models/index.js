@@ -50,6 +50,8 @@ db.keyclouds=require("./keycloud")(sequelize,Sequelize)
 db.users=require("./user")(sequelize,Sequelize)
 db.roles=require("./role.model")(sequelize,Sequelize)
 db.candidature_offres=require("./candidature_offre")(sequelize,Sequelize)
+db.offre_librarys=require("./offre_library")(sequelize,Sequelize)
+db.evaluations=require("./evaluation")(sequelize,Sequelize)
 
 
 
@@ -89,19 +91,7 @@ db.offres.belongsToMany(db.keyclouds,{
 })
 
 
-// library & offre 
-db.librarys.belongsToMany(db.offres,{
-  through : 'library-offre',
-  as:'offre',
-  foreignKey:'libraryId',
 
-})
-db.offres.belongsToMany(db.librarys,{
-  through : 'library-offre',
-  as:'library',
-  foreignKey:'offreId',
-
-})
 
  //category & keycloud
  db.categorys.belongsToMany(db.keyclouds,{
@@ -299,6 +289,53 @@ db.candidature_offres.belongsTo(db.links,{
 
 })
 
+// offre_library & offre
+db.offres.hasMany(db.offre_librarys,{
+  foreignKey : 'offreId',
+  as: 'offre_library'
+})
+
+db.offre_librarys.belongsTo(db.offres,{
+  foreignKey : 'offreId',
+  as: 'offre'
+
+})
+
+// offre_library & library
+db.librarys.hasMany(db.offre_librarys,{
+  foreignKey : 'libraryId',
+  as: 'offre_library'
+})
+
+db.offre_librarys.belongsTo(db.librarys,{
+  foreignKey : 'libraryId',
+  as: 'library'
+
+})
+
+// evaluation & candidature_offre
+db.candidature_offres.hasMany(db.evaluations,{
+  foreignKey : 'candidature_offreId',
+  as: 'evaluation'
+})
+
+db.evaluations.belongsTo(db.candidature_offres,{
+  foreignKey : 'candidature_offreId',
+  as: 'candidature_offre'
+
+})
+
+// evaluation & offre_library
+db.offre_librarys.hasMany(db.evaluations,{
+  foreignKey : 'offre_libraryId',
+  as: 'evaluation'
+})
+
+db.evaluations.belongsTo(db.offre_librarys,{
+  foreignKey : 'offre_libraryId',
+  as: 'offre_library'
+
+})
 
 
 module.exports = db ;

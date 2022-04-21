@@ -17,6 +17,8 @@ const libraryRoute = require("./app/routes/library.route")
 const categoryRoute = require("./app/routes/category.route")
 const userRoute = require("./app/routes/user.route")
 const candidature_offreRoute = require("./app/routes/candidature_offre.route")
+const offre_libraryRoute = require("./app/routes/offre_library.route")
+const evaluationRoute = require("./app/routes/evaluation.route")
 
 
 
@@ -58,6 +60,8 @@ app.use(libraryRoute)
 app.use(categoryRoute)
 app.use(userRoute)
 app.use(candidature_offreRoute)
+app.use(offre_libraryRoute)
+app.use(evaluationRoute)
 
 
 
