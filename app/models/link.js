@@ -12,7 +12,7 @@ module.exports = (sequelize, Sequelize)=>{
             allowNull: false
         },
         link:{
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING,
             allowNull: false
         },
         evaluation:{

@@ -2,14 +2,16 @@ const db =require("../models");
 const data = require("../config/db.config");
 const Link = db.links 
 const Op = db.Sequelize.Op
+const multer = require('multer');
+const path = require('path')
+
 
 
 //post hedhi
 exports.createLink = async(req, res)=>{
     const link = {
         type : req.body.type,
-        link : req.body.link,
-        uploadDate : req.body.uploadDate,
+        link : req.file.path,
         evaluation : req.body.evaluation,
 
         
@@ -41,6 +43,29 @@ exports.findAll = async(req, res)=>{
         })
     })
 }
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb)=>{
+        cb(null, path.join(__dirname, '../uploads/'))
+    },
+    filename: (req, file, cb)=>{
+        cb(null, new Date().toISOString().replace(/:/g, '-')+path.extname(file.originalname) )
+    }
+})
+
+exports.upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb)=>{
+        const fileTypes = /jpeg|jpg|png|gif|txt|ppt|pptx|xls|xlsx|zip|rar|doc|docx|pdf/
+        const mimeType = fileTypes.test(file.mimetype)
+        const extname = fileTypes.test(path.extname(file.originalname))
+        if(mimeType && extname){
+           return cb(null, true)
+        }
+        cb('Give proper files Formate to upload')
+    }
+}).single('link')
+
 // Find a single Demande with id 
 exports.findOneLink = (req, res)=>{
     const id = req.params.id;

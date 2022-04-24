@@ -28,7 +28,6 @@ const evaluationRoute = require("./app/routes/evaluation.route")
 
 
 
-
 var corsOptions = {
   origin: "*"
 };
@@ -41,6 +40,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome" });
 });
 
+app.use(express.static('./app/uploads'))
 
 
 const db = require("./app/models")
